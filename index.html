@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Nurse — الرفيق الذكي لكل ممرض</title>
+  <meta name="description" content="تطبيق Smart Nurse — أدوات سريرية احترافية للممرضين في منطقة الخليج. ICU، أدوية، NCLEX، بروتوكولات، وأكثر.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #04142E;
+      --navy-mid: #0A2456;
+      --blue: #1565C0;
+      --blue-light: #64B5F6;
+      --blue-glow: rgba(100,181,246,0.18);
+      --white: #FFFFFF;
+      --white-70: rgba(255,255,255,0.70);
+      --white-40: rgba(255,255,255,0.40);
+      --white-10: rgba(255,255,255,0.10);
+      --white-06: rgba(255,255,255,0.06);
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(100,181,246,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: rgba(4,20,46,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--white-10);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--blue-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white-70);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white) !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #1976D2 !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(21,101,192,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-glow);
+      border: 1px solid rgba(100,181,246,0.3);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--blue-light);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 8px #4CAF50;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--blue-light), var(--white), var(--blue-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--white-70);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 32px rgba(21,101,192,0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(21,101,192,0.6);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white-70);
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--white-10);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--blue-light);
+      color: var(--white);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--white-10);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--white);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .stat-num span {
+      color: var(--blue-light);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--white-40);
+      margin-top: 4px;
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      padding: 96px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--white-70);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(100,181,246,0.4);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--white-70);
+      line-height: 1.6;
+    }
+
+    .feature-count {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue-light);
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--blue-glow);
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--white-10), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .rating-section {
+      padding: 80px 24px;
+      text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(21,101,192,0.08), transparent);
+    }
+
+    .rating-big {
+      font-size: 80px;
+      font-weight: 900;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stars {
+      font-size: 32px;
+      margin: 12px 0;
+      letter-spacing: 4px;
+    }
+
+    .rating-label {
+      color: var(--white-70);
+      font-size: 15px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 96px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(21,101,192,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: var(--white-70);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--white-10);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--white-40);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--blue-light);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── PLAY BADGE ── */
+    .play-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white-06);
+      border: 1px solid var(--white-10);
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .play-badge:hover { border-color: var(--blue-light); }
+
+    .play-badge-text { text-align: right; }
+
+    .play-badge-sub {
+      font-size: 11px;
+      color: var(--white-40);
+      display: block;
+    }
+
+    .play-badge-main {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 28px; }
+      .stat-num { font-size: 26px; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-badge::before { animation: none; }
+      .btn-primary:hover { transform: none; }
+      .feature-card:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      🏥 <span>Smart</span>Nurse
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">الأدوات</a></li>
+      <li><a href="#about">عن التطبيق</a></li>
+      <li><a href="#privacy">الخصوصية</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="nav-cta">تحميل مجاني</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+
+    <div class="hero-badge">متاح الآن على Google Play</div>
+
+    <h1>
+      الرفيق الذكي<br>
+      <span class="accent">لكل ممرض محترف</span>
+    </h1>
+
+    <p class="hero-sub">
+      أدوات سريرية احترافية مصممة خصيصاً لممرضي منطقة الخليج.
+      من ICU إلى بنك أسئلة NCLEX — كل ما تحتاجه في جيبك.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
+        تحميل مجاني
+      </a>
+      <a href="#features" class="btn-secondary">
+        استكشف الأدوات ←
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">1<span>K+</span></div>
+        <div class="stat-label">مستخدم نشط</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.<span>87</span></div>
+        <div class="stat-label">تقييم المستخدمين</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50<span>+</span></div>
+        <div class="stat-label">أداة سريرية</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">مجاني</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <p class="section-label">الأدوات</p>
+    <h2 class="section-title">كل ما تحتاجه في مناوبتك</h2>
+    <p class="section-sub">
+      أدوات مبنية على مراجع طبية معتمدة، مصممة للعمل السريع في البيئة السريرية.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🫀</div>
+        <div class="feature-title">ICU & بروتوكولات التخدير</div>
+        <div class="feature-desc">بروتوكولات التخدير والتسكين المبنية على بروتوكول SGH الفعلي. RASS، CPOT، SAT protocol.</div>
+        <span class="feature-count">Propofol · Dexmedetomidine · Midazolam</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💉</div>
+        <div class="feature-title">أدوية IV Push</div>
+        <div class="feature-desc">100 دواء وريدي بالتركيزات والتخفيف والآثار الجانبية والترياق لكل دواء.</div>
+        <span class="feature-count">100 دواء</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">الحاسبات السريرية</div>
+        <div class="feature-desc">50 حاسبة طبية: GCS، SOFA، CrCl، MAP، P/F Ratio، Wells PE، HEART Score وغيرها.</div>
+        <span class="feature-count">50 حاسبة</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">NCLEX Q-Bank</div>
+        <div class="feature-desc">1000 سؤال NCLEX مع تحليل مفصل لكل إجابة، نصائح سريرية، ومرجع علمي لكل سؤال.</div>
+        <span class="feature-count">1,000 سؤال</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔬</div>
+        <div class="feature-title">مفسر التحاليل المخبرية</div>
+        <div class="feature-desc">تفسير نتائج المختبر مع الأسباب والتدخلات التمريضية المناسبة لكل قيمة.</div>
+        <span class="feature-count">100+ تحليل</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💊</div>
+        <div class="feature-title">توافق الأدوية الوريدية</div>
+        <div class="feature-desc">قاعدة بيانات توافق الأدوية IV مع تصنيف Y-site، متطلبات الفلتر، والتحذيرات.</div>
+        <span class="feature-count">200+ دواء</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">خطط الرعاية التمريضية</div>
+        <div class="feature-desc">خطط رعاية جاهزة لـ 50 تشخيصاً طبياً شائعاً مع التشخيصات التمريضية والتدخلات.</div>
+        <span class="feature-count">50 تشخيص</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏥</div>
+        <div class="feature-title">فرص العمل في الخليج</div>
+        <div class="feature-desc">قاعدة بيانات المستشفيات في السعودية والإمارات والكويت مع إمكانية تقديم الطلبات مباشرة.</div>
+        <span class="feature-count">السعودية · الإمارات · الكويت</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- RATING -->
+  <div class="rating-section" id="about">
+    <p class="section-label" style="text-align:center; margin-bottom: 24px;">تقييم المستخدمين</p>
+    <div class="rating-big">4.87</div>
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <p class="rating-label">متوسط تقييم المستخدمين على Google Play</p>
+    <p style="color: var(--white-40); font-size: 13px; margin-top: 8px;">من ممرضين في مصر، السعودية، الفلبين، السودان والإمارات</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <p class="section-label">ابدأ الآن</p>
+    <h2>حمّل التطبيق مجاناً</h2>
+    <p>متاح على Android — iOS قريباً</p>
+
+    <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="play-badge">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
+      <div class="play-badge-text">
+        <span class="play-badge-sub">تحميل من</span>
+        <span class="play-badge-main">Google Play</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://smart7nurse.github.io/smart-nurse-legal/privacy.html">سياسة الخصوصية</a>
+      <a href="https://smart7nurse.github.io/smart-nurse-legal/terms.html">شروط الاستخدام</a>
+      <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank">Google Play</a>
+    </div>
+    <p>© 2026 Smart Nurse · جميع الحقوق محفوظة</p>
+    <p style="margin-top: 6px; font-size: 11px;">
+      هذا التطبيق للأغراض التعليمية فقط. دائماً اتبع بروتوكول مؤسستك وأوامر الطبيب.
+    </p>
+  </footer>
+
+</body>
+</html>

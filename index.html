@@ -3,871 +3,657 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Nurse — رفيقك في العلم والعمل والتطور</title>
-  <meta name="description" content="Smart Nurse — أدوات سريرية احترافية للممرضين. ICU، أدوية، NCLEX، بروتوكولات، مسار مهني، وأكثر من 50 أداة مجانية.">
+  <title>Smart Nurse</title>
+  <meta name="description" content="Smart Nurse — أدوات سريرية احترافية للممرضين">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy: #04142E;
-      --navy-mid: #0A2456;
-      --blue: #1565C0;
-      --blue-light: #64B5F6;
-      --blue-glow: rgba(100,181,246,0.15);
-      --white: #FFFFFF;
-      --white-80: rgba(255,255,255,0.80);
-      --white-60: rgba(255,255,255,0.60);
-      --white-40: rgba(255,255,255,0.40);
-      --white-10: rgba(255,255,255,0.10);
-      --white-06: rgba(255,255,255,0.06);
-      --card-bg: rgba(255,255,255,0.04);
-      --card-border: rgba(100,181,246,0.15);
+      --navy:#04142E; --blue:#1565C0; --blue-light:#64B5F6;
+      --blue-glow:rgba(100,181,246,0.15);
+      --w80:rgba(255,255,255,0.80); --w60:rgba(255,255,255,0.60);
+      --w40:rgba(255,255,255,0.40); --w10:rgba(255,255,255,0.10);
+      --w06:rgba(255,255,255,0.06);
+      --card:rgba(255,255,255,0.04); --card-b:rgba(100,181,246,0.15);
     }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Cairo',sans-serif; background:var(--navy); color:#fff; overflow-x:hidden; }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 32px;
-      background: rgba(4,20,46,0.90);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--white-10);
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 32px;
+      background:rgba(4,20,46,0.92); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--w10);
     }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--white);
-      text-decoration: none;
+    .nav-logo { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:800; color:#fff; text-decoration:none; }
+    .nav-logo .logo-box {
+      width:34px; height:34px; border-radius:8px;
+      background:linear-gradient(135deg,#0D3B8C,#1565C0,#64B5F6);
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+      overflow:hidden;
     }
+    .nav-logo .logo-box img { width:100%; height:100%; object-fit:cover; display:none; }
+    .nav-logo span { color:var(--blue-light); }
+    .nav-right { display:flex; align-items:center; gap:20px; }
+    .nav-links { display:flex; gap:20px; list-style:none; align-items:center; }
+    .nav-links a { color:var(--w60); text-decoration:none; font-size:13px; font-weight:600; transition:color .2s; }
+    .nav-links a:hover { color:#fff; }
 
-    .nav-logo img {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+    /* LANG SWITCHER */
+    .lang-switcher { display:flex; gap:6px; }
+    .lang-btn {
+      background:var(--w06); border:1px solid var(--w10);
+      color:var(--w60); padding:5px 10px; border-radius:6px;
+      font-size:12px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif;
+      transition:all .2s;
     }
-
-    .nav-logo .logo-fallback {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--blue), var(--blue-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .nav-logo span { color: var(--blue-light); }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--white-60);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--white); }
+    .lang-btn:hover, .lang-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
 
     .nav-cta {
-      background: var(--blue) !important;
-      color: var(--white) !important;
-      padding: 8px 18px;
-      border-radius: 8px;
+      background:var(--blue) !important; color:#fff !important;
+      padding:8px 16px; border-radius:8px;
     }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 130px 24px 80px;
-      position: relative;
-      overflow: hidden;
+      min-height:100vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center;
+      padding:130px 24px 80px; position:relative; overflow:hidden;
     }
-
     .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(21,101,192,0.22) 0%, transparent 70%);
-      pointer-events: none;
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(21,101,192,.22) 0%, transparent 70%);
+      pointer-events:none;
     }
-
     .hero-grid {
-      position: absolute;
-      inset: 0;
+      position:absolute; inset:0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size:40px 40px; pointer-events:none;
     }
-
-    /* App Logo in hero */
-    .hero-logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 24px;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 40px rgba(21,101,192,0.5), 0 0 0 1px rgba(100,181,246,0.2);
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
+    .hero-logo-wrap {
+      width:100px; height:100px; border-radius:24px; margin-bottom:28px;
+      background:linear-gradient(135deg,#0D3B8C,#1565C0,#64B5F6);
+      display:flex; align-items:center; justify-content:center; font-size:48px;
+      box-shadow:0 8px 40px rgba(21,101,192,.5), 0 0 0 1px rgba(100,181,246,.2);
+      position:relative; z-index:1; overflow:hidden;
     }
-
-    .hero-logo-fallback {
-      width: 100px;
-      height: 100px;
-      border-radius: 24px;
-      margin-bottom: 28px;
-      background: linear-gradient(135deg, #0D3B8C, #1565C0, #64B5F6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      box-shadow: 0 8px 40px rgba(21,101,192,0.5);
-      position: relative;
-      z-index: 1;
-    }
+    .hero-logo-wrap img { width:100%; height:100%; object-fit:cover; display:none; position:absolute; inset:0; }
 
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--blue-glow);
-      border: 1px solid rgba(100,181,246,0.25);
-      border-radius: 99px;
-      padding: 6px 16px;
-      font-size: 13px;
-      color: var(--blue-light);
-      font-weight: 600;
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 1;
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--blue-glow); border:1px solid rgba(100,181,246,.25);
+      border-radius:99px; padding:6px 16px; font-size:13px;
+      color:var(--blue-light); font-weight:600; margin-bottom:24px; position:relative; z-index:1;
     }
-
     .hero-badge::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #4CAF50;
-      box-shadow: 0 0 8px #4CAF50;
-      animation: pulse 2s infinite;
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:#4CAF50; box-shadow:0 0 8px #4CAF50; animation:pulse 2s infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     .hero h1 {
-      font-size: clamp(32px, 6vw, 64px);
-      font-weight: 900;
-      line-height: 1.15;
-      margin-bottom: 8px;
-      position: relative;
-      z-index: 1;
+      font-size:clamp(32px,6vw,64px); font-weight:900; line-height:1.15;
+      margin-bottom:8px; position:relative; z-index:1;
     }
-
-    .hero h1 .accent {
-      background: linear-gradient(135deg, var(--blue-light), #fff, var(--blue-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .accent {
+      background:linear-gradient(135deg,var(--blue-light),#fff,var(--blue-light));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
+    .hero-tagline { font-size:16px; color:var(--blue-light); font-style:italic; margin-bottom:18px; position:relative; z-index:1; }
+    .hero-sub { font-size:clamp(14px,2vw,17px); color:var(--w60); max-width:580px; line-height:1.75; margin-bottom:36px; position:relative; z-index:1; }
 
-    .hero-tagline {
-      font-size: clamp(14px, 2vw, 17px);
-      color: var(--blue-light);
-      font-style: italic;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-sub {
-      font-size: clamp(15px, 2.2vw, 18px);
-      color: var(--white-60);
-      max-width: 580px;
-      line-height: 1.75;
-      margin-bottom: 36px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-
+    .hero-actions { display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:center; position:relative; z-index:1; }
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--blue);
-      color: var(--white);
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 32px rgba(21,101,192,0.4);
-      font-family: 'Cairo', sans-serif;
+      display:inline-flex; align-items:center; gap:10px;
+      background:var(--blue); color:#fff; padding:14px 28px; border-radius:12px;
+      font-size:15px; font-weight:700; text-decoration:none;
+      box-shadow:0 8px 32px rgba(21,101,192,.4); transition:transform .2s, box-shadow .2s;
+      font-family:'Cairo',sans-serif;
     }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(21,101,192,0.6);
-    }
-
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(21,101,192,.6); }
     .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--white-60);
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--white-10);
-      transition: border-color 0.2s, color 0.2s;
+      display:inline-flex; align-items:center; gap:8px;
+      color:var(--w60); padding:14px 22px; border-radius:12px;
+      font-size:14px; font-weight:600; text-decoration:none;
+      border:1px solid var(--w10); transition:border-color .2s, color .2s;
     }
-
-    .btn-secondary:hover { border-color: var(--blue-light); color: var(--white); }
+    .btn-secondary:hover { border-color:var(--blue-light); color:#fff; }
 
     .hero-stats {
-      display: flex;
-      gap: 40px;
-      margin-top: 56px;
-      padding-top: 40px;
-      border-top: 1px solid var(--white-10);
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
+      display:flex; gap:36px; margin-top:56px; padding-top:40px;
+      border-top:1px solid var(--w10); flex-wrap:wrap; justify-content:center;
+      position:relative; z-index:1;
     }
+    .stat { text-align:center; }
+    .stat-num { font-size:28px; font-weight:900; font-family:'IBM Plex Mono',monospace; }
+    .stat-num span { color:var(--blue-light); }
+    .stat-label { font-size:11px; color:var(--w40); margin-top:4px; }
 
-    .stat { text-align: center; }
-
-    .stat-num {
-      font-size: 30px;
-      font-weight: 900;
-      color: var(--white);
-      font-family: 'IBM Plex Mono', monospace;
-    }
-
-    .stat-num span { color: var(--blue-light); }
-    .stat-label { font-size: 12px; color: var(--white-40); margin-top: 4px; }
-
-    /* ── VISION ── */
-    .vision {
-      padding: 80px 24px;
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
+    /* VISION */
+    .vision { padding:72px 24px; max-width:800px; margin:0 auto; }
     .vision-quote {
-      font-size: clamp(18px, 3vw, 26px);
-      font-weight: 700;
-      line-height: 1.65;
-      color: var(--white-80);
-      border-right: 3px solid var(--blue-light);
-      padding-right: 24px;
-      text-align: right;
+      font-size:clamp(17px,2.5vw,24px); font-weight:700; line-height:1.7;
+      color:var(--w80); border-right:3px solid var(--blue-light);
+      padding-right:24px; text-align:right;
     }
+    .vision-sub { margin-top:20px; font-size:14px; color:var(--w40); line-height:1.7; text-align:right; }
+    [lang="de"] .vision-quote, [lang="fr"] .vision-quote { border-right:none; border-left:3px solid var(--blue-light); padding-right:0; padding-left:24px; text-align:left; }
+    [lang="en"] .vision-quote { border-right:none; border-left:3px solid var(--blue-light); padding-right:0; padding-left:24px; text-align:left; }
+    [lang="en"] .vision-sub, [lang="de"] .vision-sub, [lang="fr"] .vision-sub { text-align:left; }
 
-    .vision-sub {
-      margin-top: 24px;
-      font-size: 15px;
-      color: var(--white-40);
-      line-height: 1.7;
-      text-align: right;
-    }
-
-    /* ── SECTIONS ── */
-    .page-section {
-      padding: 80px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    /* SECTIONS */
+    .page-section { padding:72px 24px; max-width:1100px; margin:0 auto; }
     .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--blue-light);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      font-family: 'IBM Plex Mono', monospace;
+      font-size:11px; font-weight:700; color:var(--blue-light);
+      letter-spacing:3px; text-transform:uppercase; margin-bottom:10px;
+      font-family:'IBM Plex Mono',monospace;
     }
+    .section-title { font-size:clamp(22px,3.5vw,36px); font-weight:900; margin-bottom:10px; line-height:1.2; }
+    .section-sub { font-size:14px; color:var(--w60); max-width:560px; line-height:1.7; margin-bottom:44px; }
 
-    .section-title {
-      font-size: clamp(24px, 3.5vw, 38px);
-      font-weight: 900;
-      margin-bottom: 12px;
-      line-height: 1.2;
-    }
-
-    .section-sub {
-      font-size: 15px;
-      color: var(--white-60);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-    }
-
-    /* ── TOOLS GRID ── */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
+    /* TOOLS GRID */
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:16px; }
     .tool-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 22px;
-      transition: transform 0.2s, border-color 0.2s;
-      position: relative;
+      background:var(--card); border:1px solid var(--card-b);
+      border-radius:14px; padding:22px; transition:transform .2s, border-color .2s; position:relative;
     }
-
     .tool-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      border-radius: 14px 14px 0 0;
-      background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      border-radius:14px 14px 0 0;
+      background:linear-gradient(90deg,transparent,var(--blue-light),transparent);
+      opacity:0; transition:opacity .3s;
     }
-
-    .tool-card:hover { transform: translateY(-3px); border-color: rgba(100,181,246,0.35); }
-    .tool-card:hover::after { opacity: 1; }
-
-    .tool-icon { font-size: 28px; margin-bottom: 12px; }
-    .tool-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .tool-desc { font-size: 13px; color: var(--white-60); line-height: 1.55; }
-
+    .tool-card:hover { transform:translateY(-3px); border-color:rgba(100,181,246,.35); }
+    .tool-card:hover::after { opacity:1; }
+    .tool-icon { font-size:26px; margin-bottom:10px; }
+    .tool-title { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .tool-desc { font-size:13px; color:var(--w60); line-height:1.55; }
     .tool-tag {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--blue-light);
-      font-family: 'IBM Plex Mono', monospace;
-      background: var(--blue-glow);
-      padding: 2px 9px;
-      border-radius: 99px;
+      display:inline-block; margin-top:10px; font-size:11px; font-weight:700;
+      color:var(--blue-light); font-family:'IBM Plex Mono',monospace;
+      background:var(--blue-glow); padding:2px 9px; border-radius:99px;
     }
 
-    /* ── COUNTRIES ── */
-    .countries-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
+    /* COUNTRIES */
+    .countries-grid { display:flex; flex-wrap:wrap; gap:10px; }
     .country-chip {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: border-color 0.2s;
+      background:var(--card); border:1px solid var(--card-b);
+      border-radius:10px; padding:10px 16px; font-size:13px; font-weight:600;
+      display:flex; align-items:center; gap:8px; transition:border-color .2s;
     }
+    .country-chip:hover { border-color:var(--blue-light); }
 
-    .country-chip:hover { border-color: var(--blue-light); }
-
-    /* ── WELLBEING ── */
-    .wellbeing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
+    /* WELLBEING */
+    .wellbeing-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; }
     .wellbeing-card {
-      background: linear-gradient(135deg, rgba(21,101,192,0.12), rgba(100,181,246,0.06));
-      border: 1px solid rgba(100,181,246,0.2);
-      border-radius: 14px;
-      padding: 24px;
-      text-align: center;
+      background:linear-gradient(135deg,rgba(21,101,192,.12),rgba(100,181,246,.06));
+      border:1px solid rgba(100,181,246,.2); border-radius:14px; padding:22px; text-align:center;
     }
+    .wellbeing-icon { font-size:32px; margin-bottom:10px; }
+    .wellbeing-title { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .wellbeing-desc { font-size:13px; color:var(--w60); line-height:1.55; }
 
-    .wellbeing-icon { font-size: 36px; margin-bottom: 12px; }
-    .wellbeing-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .wellbeing-desc { font-size: 13px; color: var(--white-60); line-height: 1.55; }
+    /* DIVIDER */
+    .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--w10),transparent); }
 
-    /* ── DIVIDER ── */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--white-10), transparent);
-    }
+    /* RATING */
+    .rating-section { padding:64px 24px; text-align:center; background:linear-gradient(180deg,transparent,rgba(21,101,192,.07),transparent); }
+    .rating-big { font-size:68px; font-weight:900; font-family:'IBM Plex Mono',monospace; line-height:1; }
+    .stars { font-size:26px; margin:10px 0; letter-spacing:4px; }
 
-    /* ── RATING ── */
-    .rating-section {
-      padding: 72px 24px;
-      text-align: center;
-      background: linear-gradient(180deg, transparent, rgba(21,101,192,0.07), transparent);
-    }
-
-    .rating-big {
-      font-size: 72px;
-      font-weight: 900;
-      font-family: 'IBM Plex Mono', monospace;
-      line-height: 1;
-    }
-
-    .stars { font-size: 28px; margin: 10px 0; letter-spacing: 4px; }
-
-    /* ── FINAL CTA ── */
-    .cta-section {
-      padding: 96px 24px;
-      text-align: center;
-      position: relative;
-    }
-
+    /* CTA */
+    .cta-section { padding:88px 24px; text-align:center; position:relative; }
     .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(21,101,192,0.18) 0%, transparent 70%);
-      pointer-events: none;
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 60% 70% at 50% 50%, rgba(21,101,192,.18) 0%, transparent 70%);
+      pointer-events:none;
     }
-
-    .cta-section h2 {
-      font-size: clamp(26px, 4vw, 44px);
-      font-weight: 900;
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-section p {
-      color: var(--white-60);
-      font-size: 15px;
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 1;
-    }
-
+    .cta-section h2 { font-size:clamp(24px,4vw,42px); font-weight:900; margin-bottom:12px; position:relative; z-index:1; }
+    .cta-section p { color:var(--w60); font-size:14px; margin-bottom:28px; position:relative; z-index:1; }
     .play-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--white-06);
-      border: 1px solid var(--white-10);
-      border-radius: 14px;
-      padding: 14px 24px;
-      text-decoration: none;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative;
-      z-index: 1;
+      display:inline-flex; align-items:center; gap:14px;
+      background:var(--w06); border:1px solid var(--w10);
+      border-radius:14px; padding:14px 24px; text-decoration:none;
+      transition:border-color .2s, transform .2s; position:relative; z-index:1;
+    }
+    .play-badge:hover { border-color:var(--blue-light); transform:translateY(-2px); }
+    .play-badge-sub { font-size:11px; color:var(--w40); display:block; text-align:right; }
+    .play-badge-main { font-size:16px; font-weight:700; display:block; }
+
+    /* FOOTER */
+    footer { border-top:1px solid var(--w10); padding:28px 24px; text-align:center; color:var(--w40); font-size:13px; }
+    footer a { color:var(--blue-light); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .footer-links { display:flex; gap:20px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+
+    /* RESPONSIVE */
+    @media (max-width:768px) {
+      nav { padding:12px 16px; }
+      .nav-links { display:none; }
+      .hero-stats { gap:20px; }
+      .stat-num { font-size:22px; }
     }
 
-    .play-badge:hover { border-color: var(--blue-light); transform: translateY(-2px); }
-    .play-badge-sub { font-size: 11px; color: var(--white-40); display: block; text-align: right; }
-    .play-badge-main { font-size: 17px; font-weight: 700; display: block; }
+    /* LTR override for EN/DE/FR */
+    html[lang="en"], html[lang="de"], html[lang="fr"] { direction:ltr; }
+    html[lang="en"] body, html[lang="de"] body, html[lang="fr"] body { direction:ltr; }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--white-10);
-      padding: 32px 24px;
-      text-align: center;
-      color: var(--white-40);
-      font-size: 13px;
-    }
-
-    footer a { color: var(--blue-light); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      nav { padding: 12px 16px; }
-      .nav-links { display: none; }
-      .hero-stats { gap: 24px; }
-      .stat-num { font-size: 24px; }
-      .vision-quote { font-size: 17px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-badge::before { animation: none; }
-      * { transition: none !important; }
+    @media (prefers-reduced-motion:reduce) {
+      .hero-badge::before { animation:none; }
+      * { transition:none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="#">
-      <div class="logo-fallback">🏥</div>
-      <span>Smart</span>Nurse
-    </a>
-    <ul class="nav-links">
-      <li><a href="#tools">الأدوات</a></li>
-      <li><a href="#career">المسار المهني</a></li>
-      <li><a href="#wellbeing">الرعاية الذاتية</a></li>
-      <li><a href="https://smart7nurse.github.io/smart-nurse-legal/privacy.html">الخصوصية</a></li>
-      <li><a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="nav-cta">تحميل مجاني</a></li>
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-box">
+      <img id="nav-logo-img" src="logo.png" alt="Smart Nurse" onerror="this.style.display='none'">
+      🏥
+    </div>
+    <span>Smart</span>Nurse
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#tools" data-i="nav_tools">الأدوات</a></li>
+      <li><a href="#career" data-i="nav_career">المسار المهني</a></li>
+      <li><a href="#wellbeing" data-i="nav_wellbeing">الرعاية الذاتية</a></li>
+      <li><a href="https://smart7nurse.github.io/smart-nurse-legal/privacy.html" data-i="nav_privacy">الخصوصية</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="nav-cta" data-i="nav_download">تحميل مجاني</a></li>
     </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-grid"></div>
-
-    <div class="hero-logo-fallback">🏥</div>
-
-    <div class="hero-badge">متاح الآن على Google Play</div>
-
-    <h1>
-      <span class="accent">Smart Nurse</span><br>
-      رفيقك في العلم والعمل والتطور
-    </h1>
-
-    <p class="hero-tagline">More than an app. Your nursing companion.</p>
-
-    <p class="hero-sub">
-      ليس مجرد تطبيق يحتوي معلومات طبية —<br>
-      بل رفيق يكون معك في كل موقف: الشيفت، المذاكرة، الامتحان، المقابلة، والسفر.
-    </p>
-
-    <div class="hero-actions">
-      <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
-        تحميل مجاني من Google Play
-      </a>
-      <a href="#tools" class="btn-secondary">استكشف الأدوات ←</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
-
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">1<span>K+</span></div>
-        <div class="stat-label">مستخدم نشط</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">4.<span>87</span></div>
-        <div class="stat-label">تقييم المستخدمين ⭐</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">50<span>+</span></div>
-        <div class="stat-label">أداة سريرية</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">1<span>K</span></div>
-        <div class="stat-label">سؤال NCLEX</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">10<span>+</span></div>
-        <div class="stat-label">دولة للعمل بالخارج</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- VISION -->
-  <div class="vision">
-    <p class="vision-quote">
-      "هدفي أن يكون Smart Nurse رفيق الممرض في العلم والعمل والتطور المهني،<br>
-      وليس مجرد تطبيق آخر على الهاتف."
-    </p>
-    <p class="vision-sub">
-      حاولت أن أجمع في مكان واحد أكبر قدر ممكن من الأدوات والمعلومات التي يحتاجها الممرض
-      أثناء الشيفت، أثناء الدراسة، وفي رحلة التطور المهني والسفر والعمل بالخارج.
-    </p>
   </div>
+</nav>
 
-  <div class="divider"></div>
-
-  <!-- DAILY TOOLS -->
-  <section class="page-section" id="tools">
-    <p class="section-label">أدوات العمل اليومية</p>
-    <h2 class="section-title">كل ما تحتاجه في مناوبتك</h2>
-    <p class="section-sub">أدوات مبنية على مراجع طبية معتمدة، مصممة للعمل السريع في البيئة السريرية.</p>
-
-    <div class="tools-grid">
-      <div class="tool-card">
-        <div class="tool-icon">💊</div>
-        <div class="tool-title">Drug Protocols & Compatibility</div>
-        <div class="tool-desc">بروتوكولات الأدوية، توافق الأدوية الوريدية، والأدوية عالية الخطورة.</div>
-        <span class="tool-tag">High-Alert Medications</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">💉</div>
-        <div class="tool-title">IV Push & Dose Calculators</div>
-        <div class="tool-desc">100 دواء وريدي بالتركيزات والتخفيف والترياق. 50 حاسبة سريرية.</div>
-        <span class="tool-tag">100 دواء · 50 حاسبة</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🫀</div>
-        <div class="tool-title">بروتوكول التخدير وإدارة DKA</div>
-        <div class="tool-desc">Sedation protocol مبني على بروتوكول SGH الفعلي. RASS، CPOT، SAT. + DKA Protocol.</div>
-        <span class="tool-tag">ICU Protocols</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🔬</div>
-        <div class="tool-title">Laboratory Interpretation</div>
-        <div class="tool-desc">تفسير التحاليل مع التشخيص والتدخلات التمريضية المناسبة لكل قيمة.</div>
-        <span class="tool-tag">Dx + Interventions</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🫁</div>
-        <div class="tool-title">ABG & Ventilator Guide</div>
-        <div class="tool-desc">تفسير ABG خطوة بخطوة. دليل الجهاز التنفسي للممرض.</div>
-        <span class="tool-tag">Critical Care</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">⚠️</div>
-        <div class="tool-title">Extravasation & Infection Control</div>
-        <div class="tool-desc">إدارة تسرب الأدوية الوريدية. بروتوكولات مكافحة العدوى.</div>
-        <span class="tool-tag">151 دواء</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🩺</div>
-        <div class="tool-title">First Aid & ACLS</div>
-        <div class="tool-desc">الإسعافات الأولية وبروتوكولات ACLS للاستجابة السريعة.</div>
-        <span class="tool-tag">Emergency</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🍬</div>
-        <div class="tool-title">Insulin Management</div>
-        <div class="tool-desc">إدارة الأنسولين تحت الجلد والوريدي. بروتوكولات السكري في العناية المركزة.</div>
-        <span class="tool-tag">SC & IV</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📋</div>
-        <div class="tool-title">Nursing Care Plans</div>
-        <div class="tool-desc">خطط رعاية جاهزة لـ 50 تشخيصاً طبياً مع التشخيصات التمريضية والتدخلات.</div>
-        <span class="tool-tag">50 تشخيص</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📅</div>
-        <div class="tool-title">Expiry Date Management</div>
-        <div class="tool-desc">إدارة صلاحيات الأدوية والمستلزمات الطبية داخل المستشفى.</div>
-        <span class="tool-tag">BUD Guide</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🏥</div>
-        <div class="tool-title">Admission Bundles</div>
-        <div class="tool-desc">حزم الاستقبال والإجراءات الروتينية عند استقبال المريض.</div>
-        <span class="tool-tag">Nursing Protocols</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📖</div>
-        <div class="tool-title">Policies & Competencies</div>
-        <div class="tool-desc">سياسات وإجراءات التمريض. كفاءات تمريضية مع تقييم Pass/Fail.</div>
-        <span class="tool-tag">250 كفاءة</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- EDUCATION -->
-  <section class="page-section" id="career">
-    <p class="section-label">التطور المهني والدراسة</p>
-    <h2 class="section-title">من الشيفت للامتحان للوظيفة</h2>
-    <p class="section-sub">أدوات تساعدك على النمو المهني في كل مرحلة من مراحل مسيرتك التمريضية.</p>
-
-    <div class="tools-grid">
-      <div class="tool-card">
-        <div class="tool-icon">🧠</div>
-        <div class="tool-title">NCLEX Q-Bank</div>
-        <div class="tool-desc">1000 سؤال مع تحليل مفصل لكل إجابة — Rationale + Tips لفهم السبب، وليس الحفظ فقط.</div>
-        <span class="tool-tag">1,000 سؤال</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📝</div>
-        <div class="tool-title">SNILE & SCFHS Exam Review</div>
-        <div class="tool-desc">مراجعة شاملة لامتحانات الهيئة السعودية وSNILE مع أسئلة تدريبية.</div>
-        <span class="tool-tag">1,323 سؤال</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">💼</div>
-        <div class="tool-title">Nursing Interview Bank</div>
-        <div class="tool-desc">أكثر من 2000 سؤال وجواب للمقابلات التمريضية مع الـ Rationale والـ Tips.</div>
-        <span class="tool-tag">2,000+ سؤال</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📄</div>
-        <div class="tool-title">CV & Cover Letter Builder</div>
-        <div class="tool-desc">بناء سيرة ذاتية احترافية وخطاب تعريفي مخصص لوظائف التمريض.</div>
-        <span class="tool-tag">Professional Tools</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🎯</div>
-        <div class="tool-title">Smart Challenge & Nursing Exams</div>
-        <div class="tool-desc">اختبارات يومية وتحديات تمريضية لتثبيت المعلومات وقياس مستواك.</div>
-        <span class="tool-tag">Daily Practice</span>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📚</div>
-        <div class="tool-title">Nursing Procedures & Lectures</div>
-        <div class="tool-desc">شرح الإجراءات التمريضية ومحاضرات في الموضوعات التمريضية الأساسية.</div>
-        <span class="tool-tag">Educational</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- WORK ABROAD -->
-  <section class="page-section">
-    <p class="section-label">العمل بالخارج</p>
-    <h2 class="section-title">طريقك للعمل كممرض في الخارج</h2>
-    <p class="section-sub">
-      معلومات وأدوات تساعد الممرض الذي يفكر في السفر — الوقت اللي محتاجه، الميزانية، وكل خطوة بنفسك.
-    </p>
-    <div class="countries-grid">
-      <div class="country-chip">🇸🇦 السعودية</div>
-      <div class="country-chip">🇬🇧 المملكة المتحدة</div>
-      <div class="country-chip">🇺🇸 الولايات المتحدة</div>
-      <div class="country-chip">🇦🇺 أستراليا</div>
-      <div class="country-chip">🇨🇦 كندا</div>
-      <div class="country-chip">🇩🇪 ألمانيا</div>
-      <div class="country-chip">🇦🇪 الإمارات</div>
-      <div class="country-chip">🇶🇦 قطر</div>
-      <div class="country-chip">🇰🇼 الكويت</div>
-      <div class="country-chip">🌍 +أكثر</div>
-    </div>
-    <p style="margin-top: 20px; font-size: 13px; color: var(--white-40); line-height: 1.7;">
-      الفكرة ليست مجرد عرض معلومات عن السفر — وإنما محاولة جمع الطريق المهني ومتطلبات كل دولة في مكان واحد.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- WELLBEING -->
-  <section class="page-section" id="wellbeing">
-    <p class="section-label">الرعاية الذاتية</p>
-    <h2 class="section-title">لأن حياة الممرض لا تنتهي بانتهاء الشيفت</h2>
-    <p class="section-sub">
-      أدوات تهتم بالجانب الإنساني للممرض — تساعده على الاستمرار والتطور بدلاً من أن يتحول العمل إلى مصدر استنزاف دائم.
-    </p>
-    <div class="wellbeing-grid">
-      <div class="wellbeing-card">
-        <div class="wellbeing-icon">🔥</div>
-        <div class="wellbeing-title">Burnout Awareness</div>
-        <div class="wellbeing-desc">تقييم مستوى الإرهاق الوظيفي مع خطة أسبوعية عملية للتعافي.</div>
-      </div>
-      <div class="wellbeing-card">
-        <div class="wellbeing-icon">😴</div>
-        <div class="wellbeing-title">Sleep Recovery</div>
-        <div class="wellbeing-desc">جدول نوم مخصص لكل شيفت بناءً على علم الكرونوبيولوجي.</div>
-      </div>
-      <div class="wellbeing-card">
-        <div class="wellbeing-icon">🧘</div>
-        <div class="wellbeing-title">Mental Reset</div>
-        <div class="wellbeing-desc">جلسات تنفس وإعادة تركيز من 1 إلى 5 دقائق بعد الشيفت.</div>
-      </div>
-      <div class="wellbeing-card">
-        <div class="wellbeing-icon">💪</div>
-        <div class="wellbeing-title">Nurse Rehabilitation</div>
-        <div class="wellbeing-desc">أدوات تدعم الممرض في رحلة الاستمرار والتطور المهني.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- RATING -->
-  <div class="rating-section">
-    <p class="section-label" style="text-align:center; margin-bottom: 20px;">تقييم المستخدمين</p>
-    <div class="rating-big">4.87</div>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-    <p style="color: var(--white-60); font-size: 15px;">متوسط تقييم المستخدمين على Google Play</p>
-    <p style="color: var(--white-40); font-size: 13px; margin-top: 6px;">من ممرضين في مصر، السعودية، الفلبين، السودان، والإمارات</p>
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-logo-wrap">
+    <img src="logo.png" alt="Smart Nurse" onerror="this.style.display='none'">
+    🏥
   </div>
-
-  <div class="divider"></div>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <p class="section-label" style="position:relative;z-index:1">ابدأ الآن</p>
-    <h2>حمّل Smart Nurse مجاناً</h2>
-    <p>متاح على Android · iOS قريباً</p>
-
-    <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="play-badge">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
-      <div class="play-badge-text">
-        <span class="play-badge-sub">تحميل من</span>
-        <span class="play-badge-main">Google Play</span>
-      </div>
+  <div class="hero-badge" data-i="hero_badge">متاح الآن على Google Play</div>
+  <h1><span class="accent">Smart Nurse</span><br><span data-i="hero_h1">رفيقك في العلم والعمل والتطور</span></h1>
+  <p class="hero-tagline">More than an app. Your nursing companion.</p>
+  <p class="hero-sub" data-i="hero_sub">ليس مجرد تطبيق يحتوي معلومات طبية — بل رفيق يكون معك في كل موقف: الشيفت، المذاكرة، الامتحان، المقابلة، والسفر.</p>
+  <div class="hero-actions">
+    <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
+      <span data-i="btn_download">تحميل مجاني من Google Play</span>
     </a>
+    <a href="#tools" class="btn-secondary"><span data-i="btn_explore">استكشف الأدوات</span> →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">1<span>K+</span></div><div class="stat-label" data-i="stat_users">مستخدم نشط</div></div>
+    <div class="stat"><div class="stat-num">4.<span>87</span></div><div class="stat-label" data-i="stat_rating">تقييم المستخدمين ⭐</div></div>
+    <div class="stat"><div class="stat-num">50<span>+</span></div><div class="stat-label" data-i="stat_tools">أداة سريرية</div></div>
+    <div class="stat"><div class="stat-num">1<span>K</span></div><div class="stat-label" data-i="stat_nclex">سؤال NCLEX</div></div>
+    <div class="stat"><div class="stat-num">10<span>+</span></div><div class="stat-label" data-i="stat_countries">دولة للعمل</div></div>
+  </div>
+</section>
 
-    <p style="margin-top: 28px; font-size: 13px; color: var(--white-40); max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; z-index: 1;">
-      أسأل الله أن يبارك في هذا العمل، وأن ينفع به كل من يستخدمه.
-    </p>
-  </section>
+<div class="divider"></div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-links">
-      <a href="https://smart7nurse.github.io/smart-nurse-legal/privacy.html">سياسة الخصوصية</a>
-      <a href="https://smart7nurse.github.io/smart-nurse-legal/terms.html">شروط الاستخدام</a>
-      <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank">Google Play</a>
-    </div>
-    <p>© 2026 Smart Nurse · جميع الحقوق محفوظة</p>
-    <p style="margin-top: 6px; font-size: 11px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-      هذا التطبيق للأغراض التعليمية والمعلوماتية فقط. دائماً اتبع بروتوكول مؤسستك وأوامر الطبيب.
-    </p>
-  </footer>
+<div class="vision">
+  <p class="vision-quote" data-i="vision_quote">"هدفي أن يكون Smart Nurse رفيق الممرض في العلم والعمل والتطور المهني، وليس مجرد تطبيق آخر على الهاتف."</p>
+  <p class="vision-sub" data-i="vision_sub">حاولت أن أجمع في مكان واحد أكبر قدر ممكن من الأدوات والمعلومات التي يحتاجها الممرض أثناء الشيفت، أثناء الدراسة، وفي رحلة التطور المهني والسفر والعمل بالخارج.</p>
+</div>
 
+<div class="divider"></div>
+
+<section class="page-section" id="tools">
+  <p class="section-label" data-i="sec_daily_label">أدوات العمل اليومية</p>
+  <h2 class="section-title" data-i="sec_daily_title">كل ما تحتاجه في مناوبتك</h2>
+  <p class="section-sub" data-i="sec_daily_sub">أدوات مبنية على مراجع طبية معتمدة، مصممة للعمل السريع في البيئة السريرية.</p>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon">💊</div><div class="tool-title" data-i="t1_title">Drug Protocols & Compatibility</div><div class="tool-desc" data-i="t1_desc">بروتوكولات الأدوية، توافق الأدوية الوريدية، والأدوية عالية الخطورة.</div><span class="tool-tag">High-Alert Medications</span></div>
+    <div class="tool-card"><div class="tool-icon">💉</div><div class="tool-title" data-i="t2_title">IV Push & Dose Calculators</div><div class="tool-desc" data-i="t2_desc">100 دواء وريدي بالتركيزات والتخفيف والترياق. 50 حاسبة سريرية.</div><span class="tool-tag">100 مeds · 50 Calculators</span></div>
+    <div class="tool-card"><div class="tool-icon">🫀</div><div class="tool-title" data-i="t3_title">Sedation & DKA Protocol</div><div class="tool-desc" data-i="t3_desc">بروتوكول التخدير مبني على SGH. RASS، CPOT، SAT Protocol. + DKA.</div><span class="tool-tag">ICU Protocols</span></div>
+    <div class="tool-card"><div class="tool-icon">🔬</div><div class="tool-title" data-i="t4_title">Laboratory Interpretation</div><div class="tool-desc" data-i="t4_desc">تفسير التحاليل مع التشخيص والتدخلات التمريضية لكل قيمة.</div><span class="tool-tag">Dx + Interventions</span></div>
+    <div class="tool-card"><div class="tool-icon">🫁</div><div class="tool-title" data-i="t5_title">ABG & Ventilator Guide</div><div class="tool-desc" data-i="t5_desc">تفسير ABG خطوة بخطوة. دليل الجهاز التنفسي للممرض.</div><span class="tool-tag">Critical Care</span></div>
+    <div class="tool-card"><div class="tool-icon">⚠️</div><div class="tool-title" data-i="t6_title">Extravasation & Infection Control</div><div class="tool-desc" data-i="t6_desc">إدارة تسرب الأدوية الوريدية. بروتوكولات مكافحة العدوى.</div><span class="tool-tag">151 Drugs</span></div>
+    <div class="tool-card"><div class="tool-icon">🩺</div><div class="tool-title" data-i="t7_title">First Aid & ACLS</div><div class="tool-desc" data-i="t7_desc">الإسعافات الأولية وبروتوكولات ACLS للاستجابة السريعة.</div><span class="tool-tag">Emergency</span></div>
+    <div class="tool-card"><div class="tool-icon">📋</div><div class="tool-title" data-i="t8_title">Nursing Care Plans</div><div class="tool-desc" data-i="t8_desc">خطط رعاية جاهزة لـ 50 تشخيصاً طبياً مع التشخيصات والتدخلات.</div><span class="tool-tag">50 Diagnoses</span></div>
+    <div class="tool-card"><div class="tool-icon">📅</div><div class="tool-title" data-i="t9_title">Expiry Date Management</div><div class="tool-desc" data-i="t9_desc">إدارة صلاحيات الأدوية والمستلزمات الطبية داخل المستشفى.</div><span class="tool-tag">BUD Guide</span></div>
+    <div class="tool-card"><div class="tool-icon">📖</div><div class="tool-title" data-i="t10_title">Policies & Competencies</div><div class="tool-desc" data-i="t10_desc">سياسات وإجراءات التمريض. 250 كفاءة تمريضية مع تقييم.</div><span class="tool-tag">250 Competencies</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="page-section" id="career">
+  <p class="section-label" data-i="sec_edu_label">التطور المهني والدراسة</p>
+  <h2 class="section-title" data-i="sec_edu_title">من الدراسة للامتحان للوظيفة</h2>
+  <p class="section-sub" data-i="sec_edu_sub">أدوات تساعدك على النمو المهني في كل مرحلة من مراحل مسيرتك التمريضية.</p>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon">🧠</div><div class="tool-title">NCLEX Q-Bank</div><div class="tool-desc" data-i="e1_desc">1000 سؤال مع Rationale + Tips لفهم السبب، وليس الحفظ فقط.</div><span class="tool-tag">1,000 Questions</span></div>
+    <div class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">SNILE & SCFHS Exam</div><div class="tool-desc" data-i="e2_desc">مراجعة شاملة لامتحانات الهيئة السعودية وSNILE مع أسئلة تدريبية.</div><span class="tool-tag">1,323 Questions</span></div>
+    <div class="tool-card"><div class="tool-icon">💼</div><div class="tool-title">Nursing Interview Bank</div><div class="tool-desc" data-i="e3_desc">أكثر من 2000 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.</div><span class="tool-tag">2,000+ Q&A</span></div>
+    <div class="tool-card"><div class="tool-icon">📄</div><div class="tool-title">CV & Cover Letter Builder</div><div class="tool-desc" data-i="e4_desc">بناء سيرة ذاتية احترافية وخطاب تعريفي لوظائف التمريض.</div><span class="tool-tag">Professional Tools</span></div>
+    <div class="tool-card"><div class="tool-icon">🎯</div><div class="tool-title">Smart Challenge & Exams</div><div class="tool-desc" data-i="e5_desc">اختبارات يومية وتحديات تمريضية لتثبيت المعلومات وقياس المستوى.</div><span class="tool-tag">Daily Practice</span></div>
+    <div class="tool-card"><div class="tool-icon">📚</div><div class="tool-title">Procedures & Lectures</div><div class="tool-desc" data-i="e6_desc">شرح الإجراءات التمريضية ومحاضرات في الموضوعات الأساسية.</div><span class="tool-tag">Educational</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="page-section">
+  <p class="section-label" data-i="sec_abroad_label">العمل بالخارج</p>
+  <h2 class="section-title" data-i="sec_abroad_title">طريقك للعمل كممرض في الخارج</h2>
+  <p class="section-sub" data-i="sec_abroad_sub">معلومات وأدوات تساعد الممرض الذي يفكر في السفر — الوقت اللي محتاجه، الميزانية، وكل خطوة بنفسك.</p>
+  <div class="countries-grid">
+    <div class="country-chip">🇸🇦 <span data-i="c_sa">السعودية</span></div>
+    <div class="country-chip">🇬🇧 <span data-i="c_uk">المملكة المتحدة</span></div>
+    <div class="country-chip">🇺🇸 <span data-i="c_us">الولايات المتحدة</span></div>
+    <div class="country-chip">🇦🇺 <span data-i="c_au">أستراليا</span></div>
+    <div class="country-chip">🇨🇦 <span data-i="c_ca">كندا</span></div>
+    <div class="country-chip">🇩🇪 <span data-i="c_de">ألمانيا</span></div>
+    <div class="country-chip">🇦🇪 <span data-i="c_ae">الإمارات</span></div>
+    <div class="country-chip">🇶🇦 <span data-i="c_qa">قطر</span></div>
+    <div class="country-chip">🇰🇼 <span data-i="c_kw">الكويت</span></div>
+    <div class="country-chip">🌍 <span data-i="c_more">+أكثر</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="page-section" id="wellbeing">
+  <p class="section-label" data-i="sec_well_label">الرعاية الذاتية</p>
+  <h2 class="section-title" data-i="sec_well_title">لأن حياة الممرض لا تنتهي بانتهاء الشيفت</h2>
+  <p class="section-sub" data-i="sec_well_sub">أدوات تهتم بالجانب الإنساني — تساعدك على الاستمرار والتطور بدلاً من الاستنزاف.</p>
+  <div class="wellbeing-grid">
+    <div class="wellbeing-card"><div class="wellbeing-icon">🔥</div><div class="wellbeing-title" data-i="w1_title">Burnout Awareness</div><div class="wellbeing-desc" data-i="w1_desc">تقييم مستوى الإرهاق الوظيفي مع خطة أسبوعية للتعافي.</div></div>
+    <div class="wellbeing-card"><div class="wellbeing-icon">😴</div><div class="wellbeing-title" data-i="w2_title">Sleep Recovery</div><div class="wellbeing-desc" data-i="w2_desc">جدول نوم مخصص لكل شيفت بناءً على علم الكرونوبيولوجي.</div></div>
+    <div class="wellbeing-card"><div class="wellbeing-icon">🧘</div><div class="wellbeing-title" data-i="w3_title">Mental Reset</div><div class="wellbeing-desc" data-i="w3_desc">جلسات تنفس وإعادة تركيز من 1 إلى 5 دقائق بعد الشيفت.</div></div>
+    <div class="wellbeing-card"><div class="wellbeing-icon">💪</div><div class="wellbeing-title" data-i="w4_title">Nurse Rehabilitation</div><div class="wellbeing-desc" data-i="w4_desc">أدوات تدعم الممرض في رحلة الاستمرار والتطور المهني.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="rating-section">
+  <p class="section-label" style="text-align:center;margin-bottom:16px" data-i="rating_label">تقييم المستخدمين</p>
+  <div class="rating-big">4.87</div>
+  <div class="stars">⭐⭐⭐⭐⭐</div>
+  <p style="color:var(--w60);font-size:15px" data-i="rating_sub">متوسط تقييم المستخدمين على Google Play</p>
+  <p style="color:var(--w40);font-size:13px;margin-top:6px" data-i="rating_countries">من ممرضين في مصر، السعودية، الفلبين، السودان، والإمارات</p>
+</div>
+
+<div class="divider"></div>
+
+<section class="cta-section">
+  <p class="section-label" style="position:relative;z-index:1" data-i="cta_label">ابدأ الآن</p>
+  <h2 data-i="cta_title">حمّل Smart Nurse مجاناً</h2>
+  <p data-i="cta_sub">متاح على Android · iOS قريباً</p>
+  <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank" class="play-badge">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.77V2.28a2 2 0 0 1 1-1.77 2 2 0 0 1 2 0l17 9.72a2 2 0 0 1 0 3.46L4.18 23.49a2 2 0 0 1-1 .27z"/></svg>
+    <div><span class="play-badge-sub" data-i="play_sub">تحميل من</span><span class="play-badge-main">Google Play</span></div>
+  </a>
+  <p style="margin-top:24px;font-size:13px;color:var(--w40);max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative;z-index:1" data-i="cta_dua">أسأل الله أن يبارك في هذا العمل، وأن ينفع به كل من يستخدمه.</p>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://smart7nurse.github.io/smart-nurse-legal/privacy.html" data-i="f_privacy">سياسة الخصوصية</a>
+    <a href="https://smart7nurse.github.io/smart-nurse-legal/terms.html" data-i="f_terms">شروط الاستخدام</a>
+    <a href="https://play.google.com/store/apps/details?id=com.gulfnurse.nursejobsgulf" target="_blank">Google Play</a>
+  </div>
+  <p>© 2026 Smart Nurse · <span data-i="f_rights">جميع الحقوق محفوظة</span></p>
+  <p style="margin-top:6px;font-size:11px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6" data-i="f_disclaimer">هذا التطبيق للأغراض التعليمية والمعلوماتية فقط. دائماً اتبع بروتوكول مؤسستك وأوامر الطبيب.</p>
+</footer>
+
+<script>
+const i18n = {
+  ar: {
+    nav_tools:"الأدوات", nav_career:"المسار المهني", nav_wellbeing:"الرعاية الذاتية",
+    nav_privacy:"الخصوصية", nav_download:"تحميل مجاني",
+    hero_badge:"متاح الآن على Google Play",
+    hero_h1:"رفيقك في العلم والعمل والتطور",
+    hero_sub:"ليس مجرد تطبيق يحتوي معلومات طبية — بل رفيق يكون معك في كل موقف: الشيفت، المذاكرة، الامتحان، المقابلة، والسفر.",
+    btn_download:"تحميل مجاني من Google Play", btn_explore:"استكشف الأدوات",
+    stat_users:"مستخدم نشط", stat_rating:"تقييم المستخدمين ⭐", stat_tools:"أداة سريرية",
+    stat_nclex:"سؤال NCLEX", stat_countries:"دولة للعمل",
+    vision_quote:'"هدفي أن يكون Smart Nurse رفيق الممرض في العلم والعمل والتطور المهني، وليس مجرد تطبيق آخر على الهاتف."',
+    vision_sub:"حاولت أن أجمع في مكان واحد أكبر قدر ممكن من الأدوات والمعلومات التي يحتاجها الممرض أثناء الشيفت، أثناء الدراسة، وفي رحلة التطور المهني والسفر والعمل بالخارج.",
+    sec_daily_label:"أدوات العمل اليومية", sec_daily_title:"كل ما تحتاجه في مناوبتك",
+    sec_daily_sub:"أدوات مبنية على مراجع طبية معتمدة، مصممة للعمل السريع في البيئة السريرية.",
+    t1_title:"Drug Protocols & Compatibility", t1_desc:"بروتوكولات الأدوية، توافق الأدوية الوريدية، والأدوية عالية الخطورة.",
+    t2_title:"IV Push & Dose Calculators", t2_desc:"100 دواء وريدي بالتركيزات والتخفيف والترياق. 50 حاسبة سريرية.",
+    t3_title:"Sedation & DKA Protocol", t3_desc:"بروتوكول التخدير مبني على SGH. RASS، CPOT، SAT. + DKA.",
+    t4_title:"Laboratory Interpretation", t4_desc:"تفسير التحاليل مع التشخيص والتدخلات التمريضية لكل قيمة.",
+    t5_title:"ABG & Ventilator Guide", t5_desc:"تفسير ABG خطوة بخطوة. دليل الجهاز التنفسي للممرض.",
+    t6_title:"Extravasation & Infection Control", t6_desc:"إدارة تسرب الأدوية الوريدية. بروتوكولات مكافحة العدوى.",
+    t7_title:"First Aid & ACLS", t7_desc:"الإسعافات الأولية وبروتوكولات ACLS للاستجابة السريعة.",
+    t8_title:"Nursing Care Plans", t8_desc:"خطط رعاية جاهزة لـ 50 تشخيصاً طبياً مع التشخيصات والتدخلات.",
+    t9_title:"Expiry Date Management", t9_desc:"إدارة صلاحيات الأدوية والمستلزمات الطبية داخل المستشفى.",
+    t10_title:"Policies & Competencies", t10_desc:"سياسات وإجراءات التمريض. 250 كفاءة تمريضية مع تقييم.",
+    sec_edu_label:"التطور المهني والدراسة", sec_edu_title:"من الشيفت للامتحان للوظيفة",
+    sec_edu_sub:"أدوات تساعدك على النمو المهني في كل مرحلة من مراحل مسيرتك التمريضية.",
+    e1_desc:"1000 سؤال مع Rationale + Tips لفهم السبب، وليس الحفظ فقط.",
+    e2_desc:"مراجعة شاملة لامتحانات الهيئة السعودية وSNILE مع أسئلة تدريبية.",
+    e3_desc:"أكثر من 2000 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.",
+    e4_desc:"بناء سيرة ذاتية احترافية وخطاب تعريفي لوظائف التمريض.",
+    e5_desc:"اختبارات يومية وتحديات تمريضية لتثبيت المعلومات وقياس المستوى.",
+    e6_desc:"شرح الإجراءات التمريضية ومحاضرات في الموضوعات الأساسية.",
+    sec_abroad_label:"العمل بالخارج", sec_abroad_title:"طريقك للعمل كممرض في الخارج",
+    sec_abroad_sub:"معلومات وأدوات تساعد الممرض الذي يفكر في السفر — الوقت اللي محتاجه، الميزانية، وكل خطوة بنفسك.",
+    c_sa:"السعودية", c_uk:"المملكة المتحدة", c_us:"الولايات المتحدة",
+    c_au:"أستراليا", c_ca:"كندا", c_de:"ألمانيا",
+    c_ae:"الإمارات", c_qa:"قطر", c_kw:"الكويت", c_more:"+أكثر",
+    sec_well_label:"الرعاية الذاتية",
+    sec_well_title:"لأن حياة الممرض لا تنتهي بانتهاء الشيفت",
+    sec_well_sub:"أدوات تهتم بالجانب الإنساني — تساعدك على الاستمرار والتطور بدلاً من الاستنزاف.",
+    w1_title:"Burnout Awareness", w1_desc:"تقييم مستوى الإرهاق الوظيفي مع خطة أسبوعية للتعافي.",
+    w2_title:"Sleep Recovery", w2_desc:"جدول نوم مخصص لكل شيفت بناءً على علم الكرونوبيولوجي.",
+    w3_title:"Mental Reset", w3_desc:"جلسات تنفس وإعادة تركيز من 1 إلى 5 دقائق بعد الشيفت.",
+    w4_title:"Nurse Rehabilitation", w4_desc:"أدوات تدعم الممرض في رحلة الاستمرار والتطور المهني.",
+    rating_label:"تقييم المستخدمين",
+    rating_sub:"متوسط تقييم المستخدمين على Google Play",
+    rating_countries:"من ممرضين في مصر، السعودية، الفلبين، السودان، والإمارات",
+    cta_label:"ابدأ الآن", cta_title:"حمّل Smart Nurse مجاناً",
+    cta_sub:"متاح على Android · iOS قريباً",
+    cta_dua:"أسأل الله أن يبارك في هذا العمل، وأن ينفع به كل من يستخدمه.",
+    play_sub:"تحميل من",
+    f_privacy:"سياسة الخصوصية", f_terms:"شروط الاستخدام", f_rights:"جميع الحقوق محفوظة",
+    f_disclaimer:"هذا التطبيق للأغراض التعليمية والمعلوماتية فقط. دائماً اتبع بروتوكول مؤسستك وأوامر الطبيب."
+  },
+  en: {
+    nav_tools:"Tools", nav_career:"Career", nav_wellbeing:"Wellbeing",
+    nav_privacy:"Privacy", nav_download:"Free Download",
+    hero_badge:"Now Available on Google Play",
+    hero_h1:"Your Companion in Learning, Work & Growth",
+    hero_sub:"Not just a medical reference app — a companion for every moment: your shift, studies, exams, interviews, and career abroad.",
+    btn_download:"Free Download on Google Play", btn_explore:"Explore Tools",
+    stat_users:"Active Users", stat_rating:"User Rating ⭐", stat_tools:"Clinical Tools",
+    stat_nclex:"NCLEX Questions", stat_countries:"Countries",
+    vision_quote:'"My goal is for Smart Nurse to be the nurse\'s companion in knowledge, work, and professional growth — not just another app on the phone."',
+    vision_sub:"I tried to gather in one place as many tools and resources as a nurse could need during a shift, while studying, or throughout their professional journey and working abroad.",
+    sec_daily_label:"Daily Clinical Tools", sec_daily_title:"Everything You Need on Your Shift",
+    sec_daily_sub:"Tools built on evidence-based medical references, designed for fast clinical use.",
+    t1_title:"Drug Protocols & Compatibility", t1_desc:"Drug protocols, IV compatibility, and high-alert medications.",
+    t2_title:"IV Push & Dose Calculators", t2_desc:"100 IV medications with concentrations, dilution, and antidotes. 50 clinical calculators.",
+    t3_title:"Sedation & DKA Protocol", t3_desc:"Sedation protocol based on real SGH protocol. RASS, CPOT, SAT. + DKA.",
+    t4_title:"Laboratory Interpretation", t4_desc:"Lab value interpretation with diagnoses and nursing interventions.",
+    t5_title:"ABG & Ventilator Guide", t5_desc:"Step-by-step ABG interpretation. Ventilator guide for nurses.",
+    t6_title:"Extravasation & Infection Control", t6_desc:"IV extravasation management. Infection control protocols.",
+    t7_title:"First Aid & ACLS", t7_desc:"First aid and ACLS protocols for rapid response.",
+    t8_title:"Nursing Care Plans", t8_desc:"Ready-made care plans for 50 diagnoses with interventions.",
+    t9_title:"Expiry Date Management", t9_desc:"Medication and supply expiry management inside the hospital.",
+    t10_title:"Policies & Competencies", t10_desc:"Nursing policies and procedures. 250 competencies with Pass/Fail assessment.",
+    sec_edu_label:"Career & Education", sec_edu_title:"From Shift to Exam to Job",
+    sec_edu_sub:"Tools to support your professional growth at every stage of your nursing career.",
+    e1_desc:"1,000 questions with Rationale + Tips to understand the why, not just memorize.",
+    e2_desc:"Comprehensive review for SCFHS and SNILE exams with practice questions.",
+    e3_desc:"Over 2,000 nursing interview Q&A with Rationale and Tips.",
+    e4_desc:"Build a professional CV and cover letter for nursing jobs.",
+    e5_desc:"Daily challenges and nursing exams to reinforce knowledge.",
+    e6_desc:"Nursing procedures explained and educational lectures.",
+    sec_abroad_label:"Working Abroad", sec_abroad_title:"Your Path to Nursing Abroad",
+    sec_abroad_sub:"Information and tools for nurses considering working abroad — timeline, costs, and every step done independently.",
+    c_sa:"Saudi Arabia", c_uk:"United Kingdom", c_us:"United States",
+    c_au:"Australia", c_ca:"Canada", c_de:"Germany",
+    c_ae:"UAE", c_qa:"Qatar", c_kw:"Kuwait", c_more:"+More",
+    sec_well_label:"Wellbeing",
+    sec_well_title:"Because a Nurse's Life Doesn't End When the Shift Does",
+    sec_well_sub:"Tools focused on the human side — helping you sustain and grow rather than burn out.",
+    w1_title:"Burnout Awareness", w1_desc:"Assess your burnout level with a practical weekly recovery plan.",
+    w2_title:"Sleep Recovery", w2_desc:"Shift-specific sleep schedule based on chronobiology.",
+    w3_title:"Mental Reset", w3_desc:"1–5 minute breathing and focus reset sessions after your shift.",
+    w4_title:"Nurse Rehabilitation", w4_desc:"Tools to support nurses on their journey of growth and recovery.",
+    rating_label:"User Ratings",
+    rating_sub:"Average rating on Google Play",
+    rating_countries:"From nurses in Egypt, Saudi Arabia, Philippines, Sudan & UAE",
+    cta_label:"Get Started", cta_title:"Download Smart Nurse for Free",
+    cta_sub:"Available on Android · iOS Coming Soon",
+    cta_dua:"May this work be of benefit to every nurse who uses it.",
+    play_sub:"Get it on",
+    f_privacy:"Privacy Policy", f_terms:"Terms of Use", f_rights:"All Rights Reserved",
+    f_disclaimer:"This app is for educational and informational purposes only. Always follow your institution's protocol and physician orders."
+  },
+  de: {
+    nav_tools:"Tools", nav_career:"Karriere", nav_wellbeing:"Wohlbefinden",
+    nav_privacy:"Datenschutz", nav_download:"Kostenlos herunterladen",
+    hero_badge:"Jetzt auf Google Play verfügbar",
+    hero_h1:"Ihr Begleiter in Wissen, Arbeit & Wachstum",
+    hero_sub:"Nicht nur eine medizinische Referenz-App — ein Begleiter für jeden Moment: Schicht, Studium, Prüfungen, Vorstellungsgespräche und Karriere im Ausland.",
+    btn_download:"Kostenlos auf Google Play", btn_explore:"Tools entdecken",
+    stat_users:"Aktive Nutzer", stat_rating:"Nutzerbewertung ⭐", stat_tools:"Klinische Tools",
+    stat_nclex:"NCLEX-Fragen", stat_countries:"Länder",
+    vision_quote:'"Mein Ziel ist es, dass Smart Nurse der Begleiter der Krankenpfleger in Wissen, Arbeit und beruflichem Wachstum ist – und nicht nur eine weitere App."',
+    vision_sub:"Ich habe versucht, an einem Ort so viele Tools und Informationen zu bündeln, wie eine Pflegekraft während der Schicht, beim Lernen oder auf dem Berufsweg braucht.",
+    sec_daily_label:"Tägliche klinische Tools", sec_daily_title:"Alles was Sie in Ihrer Schicht brauchen",
+    sec_daily_sub:"Tools auf Basis evidenzbasierter medizinischer Referenzen für den schnellen klinischen Einsatz.",
+    t1_title:"Medikamentenprotokolle & Kompatibilität", t1_desc:"Medikamentenprotokolle, IV-Kompatibilität und Hochrisikomedikamente.",
+    t2_title:"IV Push & Dosierungsrechner", t2_desc:"100 IV-Medikamente mit Konzentrationen, Verdünnung und Gegenmittel. 50 klinische Rechner.",
+    t3_title:"Sedierungs- & DKA-Protokoll", t3_desc:"Sedierungsprotokoll basierend auf echtem SGH-Protokoll. RASS, CPOT, SAT. + DKA.",
+    t4_title:"Laborwert-Interpretation", t4_desc:"Laborwert-Interpretation mit Diagnosen und Pflegeinterventionen.",
+    t5_title:"ABG & Beatmungsgerät-Leitfaden", t5_desc:"Schritt-für-Schritt ABG-Interpretation. Beatmungsgerät-Leitfaden für Pflegekräfte.",
+    t6_title:"Extravasation & Infektionskontrolle", t6_desc:"IV-Extravasationsmanagement. Infektionskontrollprotokolle.",
+    t7_title:"Erste Hilfe & ACLS", t7_desc:"Erste-Hilfe- und ACLS-Protokolle für schnelle Reaktion.",
+    t8_title:"Pflegepläne", t8_desc:"Fertige Pflegepläne für 50 Diagnosen mit Interventionen.",
+    t9_title:"Ablaufdatum-Management", t9_desc:"Verwaltung von Medikamenten- und Materialablaufdaten im Krankenhaus.",
+    t10_title:"Richtlinien & Kompetenzen", t10_desc:"Pflegerichtlinien und -verfahren. 250 Kompetenzen mit Bestanden/Nicht-bestanden-Bewertung.",
+    sec_edu_label:"Karriere & Bildung", sec_edu_title:"Von der Schicht zur Prüfung zum Job",
+    sec_edu_sub:"Tools zur Unterstützung Ihres beruflichen Wachstums in jeder Phase Ihrer Pflegekarriere.",
+    e1_desc:"1.000 Fragen mit Begründung + Tipps zum Verstehen, nicht nur Auswendiglernen.",
+    e2_desc:"Umfassende Vorbereitung auf SCFHS- und SNILE-Prüfungen mit Übungsfragen.",
+    e3_desc:"Über 2.000 Vorstellungsgespräch-Fragen und Antworten mit Begründung und Tipps.",
+    e4_desc:"Professionellen Lebenslauf und Bewerbungsschreiben für Pflegestellen erstellen.",
+    e5_desc:"Tägliche Herausforderungen und Pflegeprüfungen zur Wissensfestigung.",
+    e6_desc:"Erklärte Pflegeverfahren und Bildungsvorlesungen.",
+    sec_abroad_label:"Arbeiten im Ausland", sec_abroad_title:"Ihr Weg zur Krankenpflege im Ausland",
+    sec_abroad_sub:"Informationen und Tools für Pflegekräfte, die im Ausland arbeiten möchten — Zeitplan, Kosten und jeden Schritt selbstständig.",
+    c_sa:"Saudi-Arabien", c_uk:"Vereinigtes Königreich", c_us:"Vereinigte Staaten",
+    c_au:"Australien", c_ca:"Kanada", c_de:"Deutschland",
+    c_ae:"VAE", c_qa:"Katar", c_kw:"Kuwait", c_more:"+Mehr",
+    sec_well_label:"Wohlbefinden",
+    sec_well_title:"Weil das Leben einer Pflegekraft nicht mit der Schicht endet",
+    sec_well_sub:"Tools für die menschliche Seite — damit Sie nachhaltig wachsen statt ausbrennen.",
+    w1_title:"Burnout-Bewusstsein", w1_desc:"Bewerten Sie Ihr Burnout-Niveau mit einem wöchentlichen Erholungsplan.",
+    w2_title:"Schlaf-Erholung", w2_desc:"Schichtspezifischer Schlafplan basierend auf Chronobiologie.",
+    w3_title:"Mentale Auszeit", w3_desc:"1–5 Minuten Atem- und Fokus-Übungen nach der Schicht.",
+    w4_title:"Pfleger-Rehabilitation", w4_desc:"Tools zur Unterstützung von Pflegekräften auf ihrem Wachstumsweg.",
+    rating_label:"Nutzerbewertungen",
+    rating_sub:"Durchschnittliche Bewertung auf Google Play",
+    rating_countries:"Von Pflegekräften in Ägypten, Saudi-Arabien, Philippinen, Sudan und VAE",
+    cta_label:"Jetzt starten", cta_title:"Smart Nurse kostenlos herunterladen",
+    cta_sub:"Verfügbar auf Android · iOS demnächst",
+    cta_dua:"Möge diese Arbeit für jeden Nutzer von Nutzen sein.",
+    play_sub:"Herunterladen bei",
+    f_privacy:"Datenschutzrichtlinie", f_terms:"Nutzungsbedingungen", f_rights:"Alle Rechte vorbehalten",
+    f_disclaimer:"Diese App dient nur zu Bildungs- und Informationszwecken. Befolgen Sie stets die Protokolle Ihrer Einrichtung und ärztliche Anweisungen."
+  },
+  fr: {
+    nav_tools:"Outils", nav_career:"Carrière", nav_wellbeing:"Bien-être",
+    nav_privacy:"Confidentialité", nav_download:"Téléchargement gratuit",
+    hero_badge:"Disponible maintenant sur Google Play",
+    hero_h1:"Votre compagnon dans l'apprentissage, le travail et la croissance",
+    hero_sub:"Pas seulement une application médicale — un compagnon pour chaque moment: votre service, vos études, examens, entretiens et carrière à l'étranger.",
+    btn_download:"Téléchargement gratuit sur Google Play", btn_explore:"Découvrir les outils",
+    stat_users:"Utilisateurs actifs", stat_rating:"Note des utilisateurs ⭐", stat_tools:"Outils cliniques",
+    stat_nclex:"Questions NCLEX", stat_countries:"Pays",
+    vision_quote:'"Mon objectif est que Smart Nurse soit le compagnon de l\'infirmier dans le savoir, le travail et la croissance professionnelle — pas juste une autre application."',
+    vision_sub:"J'ai essayé de rassembler en un seul endroit autant d'outils et d'informations que possible dont un infirmier a besoin pendant son service, ses études et tout au long de son parcours professionnel.",
+    sec_daily_label:"Outils cliniques quotidiens", sec_daily_title:"Tout ce dont vous avez besoin pendant votre service",
+    sec_daily_sub:"Outils basés sur des références médicales probantes, conçus pour une utilisation clinique rapide.",
+    t1_title:"Protocoles & Compatibilité médicaments", t1_desc:"Protocoles médicamenteux, compatibilité IV et médicaments à haut risque.",
+    t2_title:"IV Push & Calculateurs de doses", t2_desc:"100 médicaments IV avec concentrations, dilution et antidotes. 50 calculateurs cliniques.",
+    t3_title:"Protocole Sédation & DKA", t3_desc:"Protocole de sédation basé sur le vrai protocole SGH. RASS, CPOT, SAT. + DKA.",
+    t4_title:"Interprétation des analyses", t4_desc:"Interprétation des valeurs avec diagnostics et interventions infirmières.",
+    t5_title:"Guide ABG & Ventilateur", t5_desc:"Interprétation ABG étape par étape. Guide ventilateur pour infirmiers.",
+    t6_title:"Extravasation & Contrôle des infections", t6_desc:"Gestion de l'extravasation IV. Protocoles de contrôle des infections.",
+    t7_title:"Premiers secours & ACLS", t7_desc:"Protocoles de premiers secours et ACLS pour réponse rapide.",
+    t8_title:"Plans de soins infirmiers", t8_desc:"Plans de soins prêts pour 50 diagnostics avec interventions.",
+    t9_title:"Gestion des dates d'expiration", t9_desc:"Gestion des dates de péremption des médicaments et fournitures à l'hôpital.",
+    t10_title:"Politiques & Compétences", t10_desc:"Politiques et procédures infirmières. 250 compétences avec évaluation Réussi/Échoué.",
+    sec_edu_label:"Carrière & Formation", sec_edu_title:"Du service à l'examen à l'emploi",
+    sec_edu_sub:"Outils pour soutenir votre croissance professionnelle à chaque étape de votre carrière infirmière.",
+    e1_desc:"1 000 questions avec Rationale + Conseils pour comprendre, pas seulement mémoriser.",
+    e2_desc:"Révision complète pour les examens SCFHS et SNILE avec questions d'entraînement.",
+    e3_desc:"Plus de 2 000 questions d'entretien infirmier avec Rationale et Conseils.",
+    e4_desc:"Créez un CV professionnel et une lettre de motivation pour des postes infirmiers.",
+    e5_desc:"Défis quotidiens et examens infirmiers pour consolider les connaissances.",
+    e6_desc:"Procédures infirmières expliquées et conférences éducatives.",
+    sec_abroad_label:"Travailler à l'étranger", sec_abroad_title:"Votre chemin vers les soins infirmiers à l'étranger",
+    sec_abroad_sub:"Informations et outils pour les infirmiers envisageant de travailler à l'étranger — calendrier, coûts et chaque étape de manière autonome.",
+    c_sa:"Arabie Saoudite", c_uk:"Royaume-Uni", c_us:"États-Unis",
+    c_au:"Australie", c_ca:"Canada", c_de:"Allemagne",
+    c_ae:"Émirats Arabes Unis", c_qa:"Qatar", c_kw:"Koweït", c_more:"+Plus",
+    sec_well_label:"Bien-être",
+    sec_well_title:"Parce que la vie d'une infirmière ne s'arrête pas à la fin du service",
+    sec_well_sub:"Outils axés sur le côté humain — pour vous aider à durer et grandir plutôt que de vous épuiser.",
+    w1_title:"Sensibilisation au Burnout", w1_desc:"Évaluez votre niveau de burnout avec un plan de rétablissement hebdomadaire.",
+    w2_title:"Récupération du sommeil", w2_desc:"Programme de sommeil adapté à chaque service basé sur la chronobiologie.",
+    w3_title:"Réinitialisation mentale", w3_desc:"Sessions de respiration et de recentrage de 1 à 5 minutes après votre service.",
+    w4_title:"Réhabilitation infirmière", w4_desc:"Outils pour soutenir les infirmiers dans leur parcours de croissance.",
+    rating_label:"Avis des utilisateurs",
+    rating_sub:"Note moyenne sur Google Play",
+    rating_countries:"Par des infirmiers en Égypte, Arabie Saoudite, Philippines, Soudan et Émirats",
+    cta_label:"Commencer", cta_title:"Téléchargez Smart Nurse gratuitement",
+    cta_sub:"Disponible sur Android · iOS bientôt",
+    cta_dua:"Que ce travail soit bénéfique pour chaque infirmier qui l'utilise.",
+    play_sub:"Obtenir sur",
+    f_privacy:"Politique de confidentialité", f_terms:"Conditions d'utilisation", f_rights:"Tous droits réservés",
+    f_disclaimer:"Cette application est uniquement à des fins éducatives et informatives. Suivez toujours les protocoles de votre établissement et les ordonnances médicales."
+  }
+};
+
+function setLang(lang) {
+  const t = i18n[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i]').forEach(el => {
+    const key = el.getAttribute('data-i');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  localStorage.setItem('sn_lang', lang);
+}
+
+// Load saved language
+const saved = localStorage.getItem('sn_lang');
+if (saved && saved !== 'ar') {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.textContent.trim().toLowerCase() === saved ||
+        (saved==='en'&&btn.textContent==='EN') ||
+        (saved==='de'&&btn.textContent==='DE') ||
+        (saved==='fr'&&btn.textContent==='FR')) {
+      btn.click();
+    }
+  });
+}
+</script>
 </body>
 </html>

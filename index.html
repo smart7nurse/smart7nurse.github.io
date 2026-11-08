@@ -36,7 +36,7 @@
       display:flex; align-items:center; justify-content:center; font-size:18px;
       overflow:hidden;
     }
-    .nav-logo .logo-box img { width:100%; height:100%; object-fit:cover; display:none; }
+    .nav-logo .logo-box img { width:100%; height:100%; object-fit:cover; display:block; }
     .nav-logo span { color:var(--blue-light); }
     .nav-right { display:flex; align-items:center; gap:20px; }
     .nav-links { display:flex; gap:20px; list-style:none; align-items:center; }
@@ -83,7 +83,7 @@
       box-shadow:0 8px 40px rgba(21,101,192,.5), 0 0 0 1px rgba(100,181,246,.2);
       position:relative; z-index:1; overflow:hidden;
     }
-    .hero-logo-wrap img { width:100%; height:100%; object-fit:cover; display:none; position:absolute; inset:0; }
+    .hero-logo-wrap img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
 
     .hero-badge {
       display:inline-flex; align-items:center; gap:8px;
@@ -255,7 +255,7 @@
 <nav>
   <a class="nav-logo" href="#">
     <div class="logo-box">
-      <img id="nav-logo-img" src="logo.png" alt="Smart Nurse" onerror="this.style.display='none'">
+      <img id="nav-logo-img" src="app-icon.png" alt="Smart Nurse" onerror="this.style.display='none'">
       🏥
     </div>
     <span>Smart</span>Nurse
@@ -280,7 +280,7 @@
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-logo-wrap">
-    <img src="logo.png" alt="Smart Nurse" onerror="this.style.display='none'">
+    <img src="app-icon.png" alt="Smart Nurse" onerror="this.style.display='none'">
     🏥
   </div>
   <div class="hero-badge" data-i="hero_badge">متاح الآن على Google Play</div>
@@ -295,8 +295,8 @@
     <a href="#tools" class="btn-secondary"><span data-i="btn_explore">استكشف الأدوات</span> →</a>
   </div>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">1<span>K+</span></div><div class="stat-label" data-i="stat_users">مستخدم نشط</div></div>
-    <div class="stat"><div class="stat-num">4.<span>87</span></div><div class="stat-label" data-i="stat_rating">تقييم المستخدمين ⭐</div></div>
+    <div class="stat"><div class="stat-num">10<span>K+</span></div><div class="stat-label" data-i="stat_users">تحميل على Google Play</div></div>
+    <div class="stat"><div class="stat-num">2532</div><div class="stat-label" data-i="stat_rating">سؤال SCFHS</div></div>
     <div class="stat"><div class="stat-num">50<span>+</span></div><div class="stat-label" data-i="stat_tools">أداة سريرية</div></div>
     <div class="stat"><div class="stat-num">1<span>K</span></div><div class="stat-label" data-i="stat_nclex">سؤال NCLEX</div></div>
     <div class="stat"><div class="stat-num">10<span>+</span></div><div class="stat-label" data-i="stat_countries">دولة للعمل</div></div>
@@ -338,8 +338,8 @@
   <p class="section-sub" data-i="sec_edu_sub">أدوات تساعدك على النمو المهني في كل مرحلة من مراحل مسيرتك التمريضية.</p>
   <div class="tools-grid">
     <div class="tool-card"><div class="tool-icon">🧠</div><div class="tool-title">NCLEX Q-Bank</div><div class="tool-desc" data-i="e1_desc">1000 سؤال مع Rationale + Tips لفهم السبب، وليس الحفظ فقط.</div><span class="tool-tag">1,000 Questions</span></div>
-    <div class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">SNILE & SCFHS Exam</div><div class="tool-desc" data-i="e2_desc">مراجعة شاملة لامتحانات الهيئة السعودية وSNILE مع أسئلة تدريبية.</div><span class="tool-tag">1,323 Questions</span></div>
-    <div class="tool-card"><div class="tool-icon">💼</div><div class="tool-title">Nursing Interview Bank</div><div class="tool-desc" data-i="e3_desc">أكثر من 2000 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.</div><span class="tool-tag">2,000+ Q&A</span></div>
+    <div class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">SNILE & SCFHS Exam</div><div class="tool-desc" data-i="e2_desc">أكثر من 2500 سؤال لامتحاني الهيئة السعودية SCFHS وSNILE مع Rationale و Tips.</div><span class="tool-tag">1,323 Questions</span></div>
+    <div class="tool-card"><div class="tool-icon">💼</div><div class="tool-title">Nursing Interview Bank</div><div class="tool-desc" data-i="e3_desc">أكثر من 2600 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.</div><span class="tool-tag">2,000+ Q&A</span></div>
     <div class="tool-card"><div class="tool-icon">📄</div><div class="tool-title">CV & Cover Letter Builder</div><div class="tool-desc" data-i="e4_desc">بناء سيرة ذاتية احترافية وخطاب تعريفي لوظائف التمريض.</div><span class="tool-tag">Professional Tools</span></div>
     <div class="tool-card"><div class="tool-icon">🎯</div><div class="tool-title">Smart Challenge & Exams</div><div class="tool-desc" data-i="e5_desc">اختبارات يومية وتحديات تمريضية لتثبيت المعلومات وقياس المستوى.</div><span class="tool-tag">Daily Practice</span></div>
     <div class="tool-card"><div class="tool-icon">📚</div><div class="tool-title">Procedures & Lectures</div><div class="tool-desc" data-i="e6_desc">شرح الإجراءات التمريضية ومحاضرات في الموضوعات الأساسية.</div><span class="tool-tag">Educational</span></div>
@@ -382,16 +382,6 @@
 
 <div class="divider"></div>
 
-<div class="rating-section">
-  <p class="section-label" style="text-align:center;margin-bottom:16px" data-i="rating_label">تقييم المستخدمين</p>
-  <div class="rating-big">4.87</div>
-  <div class="stars">⭐⭐⭐⭐⭐</div>
-  <p style="color:var(--w60);font-size:15px" data-i="rating_sub">متوسط تقييم المستخدمين على Google Play</p>
-  <p style="color:var(--w40);font-size:13px;margin-top:6px" data-i="rating_countries">من ممرضين في مصر، السعودية، الفلبين، السودان، والإمارات</p>
-</div>
-
-<div class="divider"></div>
-
 <section class="cta-section">
   <p class="section-label" style="position:relative;z-index:1" data-i="cta_label">ابدأ الآن</p>
   <h2 data-i="cta_title">حمّل Smart Nurse مجاناً</h2>
@@ -422,7 +412,7 @@ const i18n = {
     hero_h1:"رفيقك في العلم والعمل والتطور",
     hero_sub:"ليس مجرد تطبيق يحتوي معلومات طبية — بل رفيق يكون معك في كل موقف: الشيفت، المذاكرة، الامتحان، المقابلة، والسفر.",
     btn_download:"تحميل مجاني من Google Play", btn_explore:"استكشف الأدوات",
-    stat_users:"مستخدم نشط", stat_rating:"تقييم المستخدمين ⭐", stat_tools:"أداة سريرية",
+    stat_users:"تحميل على Google Play", stat_rating:"سؤال SCFHS", stat_tools:"أداة سريرية",
     stat_nclex:"سؤال NCLEX", stat_countries:"دولة للعمل",
     vision_quote:'"هدفي أن يكون Smart Nurse رفيق الممرض في العلم والعمل والتطور المهني، وليس مجرد تطبيق آخر على الهاتف."',
     vision_sub:"حاولت أن أجمع في مكان واحد أكبر قدر ممكن من الأدوات والمعلومات التي يحتاجها الممرض أثناء الشيفت، أثناء الدراسة، وفي رحلة التطور المهني والسفر والعمل بالخارج.",
@@ -430,7 +420,7 @@ const i18n = {
     sec_daily_sub:"أدوات مبنية على مراجع طبية معتمدة، مصممة للعمل السريع في البيئة السريرية.",
     t1_title:"Drug Protocols & Compatibility", t1_desc:"بروتوكولات الأدوية، توافق الأدوية الوريدية، والأدوية عالية الخطورة.",
     t2_title:"IV Push & Dose Calculators", t2_desc:"100 دواء وريدي بالتركيزات والتخفيف والترياق. 50 حاسبة سريرية.",
-    t3_title:"Sedation & DKA Protocol", t3_desc:"بروتوكول التخدير مبني على . RASS، CPOT، SAT. + DKA.",
+    t3_title:"Sedation & DKA Protocol", t3_desc:"بروتوكول التخدير مبني على RASS وCPOT وSAT، مع DKA.",
     t4_title:"Laboratory Interpretation", t4_desc:"تفسير التحاليل مع التشخيص والتدخلات التمريضية لكل قيمة.",
     t5_title:"ABG & Ventilator Guide", t5_desc:"تفسير ABG خطوة بخطوة. دليل الجهاز التنفسي للممرض.",
     t6_title:"Extravasation & Infection Control", t6_desc:"إدارة تسرب الأدوية الوريدية. بروتوكولات مكافحة العدوى.",
@@ -441,8 +431,8 @@ const i18n = {
     sec_edu_label:"التطور المهني والدراسة", sec_edu_title:"من الشيفت للامتحان للوظيفة",
     sec_edu_sub:"أدوات تساعدك على النمو المهني في كل مرحلة من مراحل مسيرتك التمريضية.",
     e1_desc:"1000 سؤال مع Rationale + Tips لفهم السبب، وليس الحفظ فقط.",
-    e2_desc:"مراجعة شاملة لامتحانات الهيئة السعودية وSNILE مع أسئلة تدريبية.",
-    e3_desc:"أكثر من 2000 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.",
+    e2_desc:"أكثر من 2500 سؤال لامتحاني الهيئة السعودية SCFHS وSNILE مع Rationale و Tips.",
+    e3_desc:"أكثر من 2600 سؤال وجواب للمقابلات التمريضية مع Rationale والـ Tips.",
     e4_desc:"بناء سيرة ذاتية احترافية وخطاب تعريفي لوظائف التمريض.",
     e5_desc:"اختبارات يومية وتحديات تمريضية لتثبيت المعلومات وقياس المستوى.",
     e6_desc:"شرح الإجراءات التمريضية ومحاضرات في الموضوعات الأساسية.",
@@ -475,7 +465,7 @@ const i18n = {
     hero_h1:"Your Companion in Learning, Work & Growth",
     hero_sub:"Not just a medical reference app — a companion for every moment: your shift, studies, exams, interviews, and career abroad.",
     btn_download:"Free Download on Google Play", btn_explore:"Explore Tools",
-    stat_users:"Active Users", stat_rating:"User Rating ⭐", stat_tools:"Clinical Tools",
+    stat_users:"Google Play Downloads", stat_rating:"SCFHS Questions", stat_tools:"Clinical Tools",
     stat_nclex:"NCLEX Questions", stat_countries:"Countries",
     vision_quote:'"My goal is for Smart Nurse to be the nurse\'s companion in knowledge, work, and professional growth — not just another app on the phone."',
     vision_sub:"I tried to gather in one place as many tools and resources as a nurse could need during a shift, while studying, or throughout their professional journey and working abroad.",
@@ -494,8 +484,8 @@ const i18n = {
     sec_edu_label:"Career & Education", sec_edu_title:"From Shift to Exam to Job",
     sec_edu_sub:"Tools to support your professional growth at every stage of your nursing career.",
     e1_desc:"1,000 questions with Rationale + Tips to understand the why, not just memorize.",
-    e2_desc:"Comprehensive review for SCFHS and SNILE exams with practice questions.",
-    e3_desc:"Over 2,000 nursing interview Q&A with Rationale and Tips.",
+    e2_desc:"Over 2,500 SCFHS and SNILE questions with Rationale and Tips.",
+    e3_desc:"Over 2,600 nursing interview Q&A with Rationale and Tips.",
     e4_desc:"Build a professional CV and cover letter for nursing jobs.",
     e5_desc:"Daily challenges and nursing exams to reinforce knowledge.",
     e6_desc:"Nursing procedures explained and educational lectures.",
@@ -528,7 +518,7 @@ const i18n = {
     hero_h1:"Ihr Begleiter in Wissen, Arbeit & Wachstum",
     hero_sub:"Nicht nur eine medizinische Referenz-App — ein Begleiter für jeden Moment: Schicht, Studium, Prüfungen, Vorstellungsgespräche und Karriere im Ausland.",
     btn_download:"Kostenlos auf Google Play", btn_explore:"Tools entdecken",
-    stat_users:"Aktive Nutzer", stat_rating:"Nutzerbewertung ⭐", stat_tools:"Klinische Tools",
+    stat_users:"Google-Play-Downloads", stat_rating:"SCFHS-Fragen", stat_tools:"Klinische Tools",
     stat_nclex:"NCLEX-Fragen", stat_countries:"Länder",
     vision_quote:'"Mein Ziel ist es, dass Smart Nurse der Begleiter der Krankenpfleger in Wissen, Arbeit und beruflichem Wachstum ist – und nicht nur eine weitere App."',
     vision_sub:"Ich habe versucht, an einem Ort so viele Tools und Informationen zu bündeln, wie eine Pflegekraft während der Schicht, beim Lernen oder auf dem Berufsweg braucht.",
@@ -547,8 +537,8 @@ const i18n = {
     sec_edu_label:"Karriere & Bildung", sec_edu_title:"Von der Schicht zur Prüfung zum Job",
     sec_edu_sub:"Tools zur Unterstützung Ihres beruflichen Wachstums in jeder Phase Ihrer Pflegekarriere.",
     e1_desc:"1.000 Fragen mit Begründung + Tipps zum Verstehen, nicht nur Auswendiglernen.",
-    e2_desc:"Umfassende Vorbereitung auf SCFHS- und SNILE-Prüfungen mit Übungsfragen.",
-    e3_desc:"Über 2.000 Vorstellungsgespräch-Fragen und Antworten mit Begründung und Tipps.",
+    e2_desc:"Über 2.500 SCFHS- und SNILE-Fragen mit Begründung und Tipps.",
+    e3_desc:"Über 2.600 Vorstellungsgespräch-Fragen und Antworten mit Begründung und Tipps.",
     e4_desc:"Professionellen Lebenslauf und Bewerbungsschreiben für Pflegestellen erstellen.",
     e5_desc:"Tägliche Herausforderungen und Pflegeprüfungen zur Wissensfestigung.",
     e6_desc:"Erklärte Pflegeverfahren und Bildungsvorlesungen.",
@@ -581,7 +571,7 @@ const i18n = {
     hero_h1:"Votre compagnon dans l'apprentissage, le travail et la croissance",
     hero_sub:"Pas seulement une application médicale — un compagnon pour chaque moment: votre service, vos études, examens, entretiens et carrière à l'étranger.",
     btn_download:"Téléchargement gratuit sur Google Play", btn_explore:"Découvrir les outils",
-    stat_users:"Utilisateurs actifs", stat_rating:"Note des utilisateurs ⭐", stat_tools:"Outils cliniques",
+    stat_users:"Téléchargements Google Play", stat_rating:"Questions SCFHS", stat_tools:"Outils cliniques",
     stat_nclex:"Questions NCLEX", stat_countries:"Pays",
     vision_quote:'"Mon objectif est que Smart Nurse soit le compagnon de l\'infirmier dans le savoir, le travail et la croissance professionnelle — pas juste une autre application."',
     vision_sub:"J'ai essayé de rassembler en un seul endroit autant d'outils et d'informations que possible dont un infirmier a besoin pendant son service, ses études et tout au long de son parcours professionnel.",
@@ -600,8 +590,8 @@ const i18n = {
     sec_edu_label:"Carrière & Formation", sec_edu_title:"Du service à l'examen à l'emploi",
     sec_edu_sub:"Outils pour soutenir votre croissance professionnelle à chaque étape de votre carrière infirmière.",
     e1_desc:"1 000 questions avec Rationale + Conseils pour comprendre, pas seulement mémoriser.",
-    e2_desc:"Révision complète pour les examens SCFHS et SNILE avec questions d'entraînement.",
-    e3_desc:"Plus de 2 000 questions d'entretien infirmier avec Rationale et Conseils.",
+    e2_desc:"Plus de 2 500 questions SCFHS et SNILE avec Rationale et Conseils.",
+    e3_desc:"Plus de 2 600 questions d'entretien infirmier avec Rationale et Conseils.",
     e4_desc:"Créez un CV professionnel et une lettre de motivation pour des postes infirmiers.",
     e5_desc:"Défis quotidiens et examens infirmiers pour consolider les connaissances.",
     e6_desc:"Procédures infirmières expliquées et conférences éducatives.",
